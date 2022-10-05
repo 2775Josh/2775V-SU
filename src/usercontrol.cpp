@@ -9,9 +9,6 @@ void usercontrol( void ) {
   float throttle;
   float turn;
   float drivescalefactor = 0.09448818897;
-  float shoottimer = 0;
-  int shooterstate = 0; //0 is uninvolved, 1 is shooting out, 2 is unshooting
-  int shootcounter = 0;
   while (1) {
     throttle = drivescalefactor*Controller1.Axis3.value();
     turn = drivescalefactor*Controller1.Axis1.value();
@@ -21,12 +18,6 @@ void usercontrol( void ) {
     if(Controller1.ButtonL2.pressing()){
       while(Controller1.ButtonL2.pressing()){}
     Intake.rotateFor(fwd, 95, deg, 100, velocityUnits::pct, false);
-    }
-
-    if(Controller1.ButtonUp.pressing() && (Controller1.ButtonLeft.pressing()) && (Controller1.ButtonDown.pressing()) && (Controller1.ButtonRight.pressing())){
-    Endgame.set(true);
-    }else{
-    Endgame.set(false);
     }
 
     if (Controller1.ButtonR1.pressing()) {
@@ -43,25 +34,14 @@ void usercontrol( void ) {
      velcontroller(0);
     } else if (Controller1.ButtonX.pressing()){
      velcontroller(90);
-     }
+    }
 
-    if(Controller1.ButtonL1.pressing() && shooterstate == 0 && shootcounter < 3) {
-      Indexer.set(false);
-      shooterstate = 1;
-      shoottimer = Brain.timer(msec);
-      shootcounter ++;
+    if (Controller1.ButtonA.pressing()){
+    Endgame3.set(false);
     }
-    if(shooterstate == 1 && Brain.timer(msec)-shoottimer > shootingtime) {
-      Indexer.set(true);
-      shooterstate = 2;
-      shoottimer = Brain.timer(msec);
+    else {
+    Endgame3.set(true);
     }
-    if(shooterstate == 2 && Brain.timer(msec)-shoottimer > unshootingtime) {
-      shooterstate = 0;
-    }
-    if(shooterstate == 0) {
-      if (!Controller1.ButtonL1.pressing()){ shootcounter = 0; }
-      Indexer.set(true);
-    }
+  
   }
-}
+  }

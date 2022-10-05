@@ -1,14 +1,8 @@
 #include "vex.h"
 
-#define RED 0
-#define BLUE 1
-
-float shootingtime = 250;
-float unshootingtime = 350;
-
 float flywheelVelocity = 0;
 
-float kP = .13;
+float kP = .01;
 float kI = 0;
 float kD = 0;
 float kF = .12;
@@ -46,44 +40,4 @@ while(true){
 void velcontroller(double vel){
  target = vel;
 }
-
-int getColor(){
-  opt.setLightPower(100,pct);
-  if (opt.isNearObject()) {
-    int objHue = opt.hue();
-    if (objHue < 300 && objHue > 180) {return BLUE;}
-    else if (objHue < 20) {return RED;} 
-    else {return 2;}
-  }  
-  else {return 2;}
-}
-
-int rollerSpin(bool color, float speed, float timeout, float extraspin){
-  if (color == RED) {
-  float starttime = Brain.timer(msec);
-  while( !getColor() == color && Brain.timer(msec)-starttime < timeout){
-    Intake.spin(fwd, speed, pct);
-  }
-  while( getColor() == color && Brain.timer(msec)-starttime < timeout){
-    Intake.spin(fwd, speed/2, pct);
-  }
-  Intake.stop(hold);
-  Intake.rotateFor(fwd, extraspin, deg, speed, velocityUnits::pct, false);
-  }
-  if (color == BLUE) {
-  float starttime = Brain.timer(msec);
-  while( getColor() == RED && Brain.timer(msec)-starttime < timeout){
-    Intake.spin(fwd, speed, pct);
-  }
-  while( ((!getColor()) == RED) && Brain.timer(msec)-starttime < timeout){
-    Intake.spin(fwd, speed/2, pct);
-  }
-  Intake.stop(hold);
-  Intake.rotateFor(fwd, extraspin, deg, speed, velocityUnits::pct, false);
-  }
-  return 0;
-}
-
-
-
 

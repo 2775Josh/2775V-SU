@@ -1,5 +1,3 @@
-extern float shootingtime;
-extern float unshootingtime;
 extern float flywheelVelocity;
 
 int bangbangcontroller();

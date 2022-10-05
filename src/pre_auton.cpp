@@ -5,7 +5,6 @@ int currentselection = 0;
 bool autonSelector = true;
 
 void pre_auton(){
-Indexer.set(true);
 
 while(autonSelector){
 

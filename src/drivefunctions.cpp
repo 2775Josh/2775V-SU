@@ -85,8 +85,8 @@ void driveHold( void ) {
 
 
 void updatePosition() { //Approximates the motion of the robot as an arc, and updates its position accordingly
-    currentR = -(EncoderR.rotation(rotationUnits::deg))*(rWheelRatio); 
-    currentB = 0;
+    currentR = (EncoderR.rotation(rotationUnits::deg))*(rWheelRatio); 
+    currentB = -(EncoderB.rotation(rotationUnits::deg))*(rWheelRatio);
 
     deltaR = currentR - prevR;
     deltaB = currentB - prevB;
