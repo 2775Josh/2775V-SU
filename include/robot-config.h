@@ -11,12 +11,12 @@ extern controller Controller1;
 extern inertial Gyro;
 extern encoder EncoderR;
 extern encoder EncoderB;
-extern digital_out Endgame1;
-extern digital_out Endgame2;
-extern digital_out Endgame3;
-extern digital_out Endgame4;
+extern digital_out Endgame;
+extern digital_out DSwitcher;
 extern bumper Cycle;
 extern bumper Confirm;
+extern motor L1, L2, L3;
+extern motor R1, R2, R3;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

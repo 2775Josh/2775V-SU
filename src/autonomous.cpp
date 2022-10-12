@@ -5,7 +5,7 @@
 void autonomous(void) {
   switch(currentselection){
  case 1:
-  fifteenSkillsAuto();
+  HauntedSkillsAuto();
   break;
  case 2:
   leftAuto();
@@ -16,6 +16,5 @@ void autonomous(void) {
  case 4:
   WPAuto();
   break;
-}
-
+ }
 }

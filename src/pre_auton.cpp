@@ -6,6 +6,9 @@ bool autonSelector = true;
 
 void pre_auton(){
 
+Endgame.set(false);
+DSwitcher.set(false);
+
 while(autonSelector){
 
 Brain.Screen.clearScreen();
@@ -41,7 +44,7 @@ else if(Confirm.pressing()){
 else if(currentselection == 5){
  currentselection = 0;
 }
-task::sleep(100);
+task::sleep(20);
 
  }
 }

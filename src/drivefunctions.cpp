@@ -1,14 +1,16 @@
 #include "vex.h"
 
+float pi = 3.14159265359; //Pi
+
 //Physical Distances on the Bot, measured in inches from the center
-float rWidth = 11.1-7.5;
-float lWidth = 11.1-7.5;
-float bLength = 0;
+float rWidth = (12.625/2)-4;
+float lWidth = (12.625/2)-4;
+float bLength = (17.5/2)-2;
 
 //Ratios of Odom Wheels, in Inches/Degrees
-float rWheelRatio = -0.024948;
-float lWheelRatio = 0.024742; 
-float bWheelRatio = -0.024603; 
+float rWheelRatio = 2.75*pi/360*1.015;
+float lWheelRatio = 2.75*pi/360*1.015; 
+float bWheelRatio = 2.75*pi/360*1.015; 
 
 //Variables to Calulate Deltas in Encoder Values
 float prevL = 0;
@@ -45,8 +47,6 @@ float driveMax = 60;
 float errorMarginBase = 1;
 float errorMarginTurnDeg = 0.5;
 
-float pi = 3.14159265359; //Pi
-
 //Encoder Values
 float currentL = 0;
 float currentR = 0;
@@ -73,6 +73,15 @@ void setDriveVoltage(float leftVolts, float rightVolts) {
   DriveR.spin(fwd, rightVolts, volt);
 }
 
+void setDriveVoltageNoSlop(float leftVolts, float rightVolts) {
+  L1.spin(fwd, leftVolts, volt);
+  L2.spin(fwd, leftVolts, volt);
+  L3.spin(fwd, leftVolts*0.6, volt);
+  R1.spin(fwd, rightVolts, volt);
+  R2.spin(fwd, rightVolts, volt);
+  R3.spin(fwd, rightVolts*0.6, volt);
+}
+
 void setDriveVelocity(float leftVelo, float rightVelo) {
   DriveL.spin(fwd, leftVelo, pct);
   DriveR.spin(fwd, rightVelo, pct);
@@ -94,7 +103,7 @@ void updatePosition() { //Approximates the motion of the robot as an arc, and up
     prevR = currentR;
     prevB = currentB; 
 
-    absOrientationDeg = Gyro.heading(deg); 
+    absOrientationDeg = Gyro.rotation(deg)*360.0/357.0; 
 
     absOrientationRad = absOrientationDeg/(180/pi);
 
@@ -145,7 +154,7 @@ int positionTrack() { //Background thread used to position track full time.
 
     Brain.Screen.printAt(1, 20, "Absolute X: %f Inches", absGlobalX);
     Brain.Screen.printAt(1, 40, "Absolute Y: %f Inches", absGlobalY);
-    Brain.Screen.printAt(1, 60, "Absolute Rotation: %f Radians, %f Degrees", (EncoderR.rotation(rotationUnits::deg))*(rWheelRatio), absOrientationDeg);
+    Brain.Screen.printAt(1, 60, "Absolute Rotation: %f Radians, %f Degrees", Gyro.rotation(deg), absOrientationDeg);
   }
 }
 
@@ -155,8 +164,8 @@ void driveReset(float X, float Y, float OrientationDeg) { //Tells the robot its 
   absGlobalX=X;
   absGlobalY=Y;
   prevOrientationRad=OrientationDeg*pi/180;
-
-  Gyro.setHeading(OrientationDeg, deg);
+  absOrientationDeg=OrientationDeg;
+  Gyro.setRotation(OrientationDeg*357.0/360.0,deg);
 }
 
 void straightdrive(float x, float y, float timeout, float kp, float ki, float kd, float turnp, float turni, float turnd, float maxvoltage, float turnmaxvoltage, float settlingerror, float settlingtime){
@@ -197,11 +206,11 @@ void straightdrive(float x, float y, float timeout, float kp, float ki, float kd
     if (error<settlingerror) {turnerror = 0;}
     turn = turnp*turnerror+turni*turnaccerror+turnd*(turnerror-turnpreverror);
 
-    if(turn>maxvoltage){
-      turn = maxvoltage;
+    if(turn>turnmaxvoltage){
+      turn = turnmaxvoltage;
     }
-    if(turn<-maxvoltage){
-      turn = -maxvoltage;
+    if(turn<-turnmaxvoltage){
+      turn = -turnmaxvoltage;
     }
   
     turnpreverror=turnerror;
@@ -317,7 +326,7 @@ void turn(float angle, float timeout, float settlingerror, float settlingtime, f
   float preverror = error;
   float settlecounter = 0;
   while(settled == false && Brain.timer(msec) < starttime + timeout){
-    error = reduceAngleMinus180to180(angle - Gyro.heading(deg));
+    error = reduceAngleMinus180to180(angle - absOrientationDeg);
     p = error*kp;
     i = accerror*ki;
     d = (error-preverror)*kd;
@@ -328,7 +337,7 @@ void turn(float angle, float timeout, float settlingerror, float settlingtime, f
     if(output<-maxvoltage){
       output = -maxvoltage;
     }
-    setDriveVoltage(output, -output);
+    setDriveVoltageNoSlop(output, -output);
     preverror=error;
     
     if(output == maxvoltage || output == -maxvoltage){
@@ -375,7 +384,7 @@ void turntopoint(float x, float y, float timeout, float settlingerror, float set
     if(output<-maxvoltage){
       output = -maxvoltage;
     }
-    setDriveVoltage(output, -output);
+    setDriveVoltageNoSlop(output, -output);
     preverror=error;
     
     if(output == maxvoltage || output == -maxvoltage){

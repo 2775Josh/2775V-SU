@@ -1,5 +1,7 @@
 void twelveSkillsAuto();
 
+void HauntedSkillsAuto();
+
 void fifteenSkillsAuto();
 
 void leftAuto();
