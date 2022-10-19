@@ -5,7 +5,7 @@
 void autonomous(void) {
   switch(currentselection){
  case 0:
-  HauntedSkillsAuto();
+  leftAuto();
   break;
  case 1:
   HauntedSkillsAuto();
