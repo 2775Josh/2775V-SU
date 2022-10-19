@@ -1,6 +1,6 @@
 #include "vex.h"
 
-void twelveSkillsAuto() {
+/*void twelveSkillsAuto() {
   vex::task positiontrack = task(positionTrack);
   task::sleep(250);
   Intake.rotateFor(fwd, 95, deg, 90, velocityUnits::pct, true);
@@ -160,11 +160,11 @@ void fifteenSkillsAuto() {
   driveReset(134, absGlobalY, Gyro.heading());
   straightdrive(126, 126);
   turn(-135, 0, .5, 100);
-}
+}*/
 
 void leftAuto(){
   vex::task positiontrack = task(positionTrack);
-  velcontroller(80);
+  velcontroller(80,0);
   setDriveVoltage(4, 4);
   task::sleep(250);
   Intake.rotateFor(fwd, 665, deg, 90, velocityUnits::pct, true);
@@ -197,13 +197,13 @@ void rightAuto(){
   setDriveVoltage(4, 4);
   task::sleep(1500);
   Intake.rotateFor(fwd, 95, deg, 90, velocityUnits::pct, true);
-  velcontroller(90);
+  velcontroller(90,0);
   driveReset(134, 108, 90);
   straightdrive(130, 104, 0, 1.5, 0, 1, 1, 0, 2.5, 8, 4, 1, 300);
   turntopoint(18, 144-18, 0, .5, 500);
   turn(-135);
   Intake.spin(fwd, 100, pct);
-  velcontroller(85);
+  velcontroller(85,0);
   straightdrive(84, 60, 0, 1, 0, 3, 1, 0, 2.5, 4, 4);
   turntopoint(18, 144-19, 0, .5, 500);
 }
@@ -216,7 +216,7 @@ void HauntedSkillsAuto(){
   driveReset(35, 11, 180);
   setDriveVoltage(4, 4);
   task::sleep(250);
-  velcontroller(barrierspeed);
+  velcontroller(barrierspeed,1);
   Intake.rotateFor(fwd, 400, deg, 90, velocityUnits::pct, true);
   straightdrive(44,19,0, 2, 0, 10, .5, 0, 3, 8, 12, 7, 20);
   Intake.spin(fwd, 100, pct);
@@ -233,7 +233,7 @@ void HauntedSkillsAuto(){
   turn(180);
   quickshoot();
   Intake.spin(fwd, 100, pct);
-  velcontroller(barriercornerspeed);
+  velcontroller(barriercornerspeed,1);
   straightdrive(18,45, 0, 2, 0, 10, .5, 0, 3, 8, 12, 5);
   turn(45, 0, 3, 20, .75, 0, 3);
   straightdrive(62, 81, 0, 2, 0, 10, .5, 0, 3, 6, 4, 1.5, 20);
@@ -248,7 +248,7 @@ void HauntedSkillsAuto(){
   Intake.stop();
   setDriveVoltage(4, 4);
   task::sleep(500);
-  velcontroller(loaderspeed);
+  velcontroller(loaderspeed,1);
   driveReset(absGlobalX, 134, absOrientationDeg);
   Intake.rotateFor(fwd, 400, deg, 90, velocityUnits::pct, true);\
   turn(90, 0, 3, 20);
@@ -269,7 +269,7 @@ void HauntedSkillsAuto(){
   setDriveVoltage(-4,-4);
   task::sleep(250);
   Intake.spin(fwd,100,pct);
-  velcontroller(barriercornerspeed);
+  velcontroller(barriercornerspeed,1);
   straightdrive(18,45, 0, 2, 0, 10, .5, 0, 3, 8, 12, 5);
   DSwitcher.set(false);
   turn(45, 0, 3, 20, .75, 0, 3);
