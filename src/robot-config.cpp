@@ -25,7 +25,8 @@ controller Controller1 = controller(primary);
 digital_out Endgame = digital_out(Brain.ThreeWirePort.E);
 digital_out DSwitcher = digital_out(Brain.ThreeWirePort.H);
 bumper Cycle = bumper(Brain.ThreeWirePort.F);
-bumper Confirm = bumper(Brain.ThreeWirePort.G);
+bumper Confirm = bumper(Brain.ThreeWirePort.F);
+line Line = line(Brain.ThreeWirePort.G);
 
 
 // VEXcode generated functions

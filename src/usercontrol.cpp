@@ -4,6 +4,7 @@
 void usercontrol( void ) {
   vex::task positiontrackingtask = task(positionTrack);
   vex::task bangbangcontrol = task(bangbangcontroller);
+  vex::task PIDcontrol = task(pidcontroller);
 
 
   float throttle;
@@ -38,13 +39,13 @@ void usercontrol( void ) {
     }
 
     if (Controller1.ButtonA.pressing()) {
-      velcontroller(60);
+      velcontroller(59,1);
     } else if (Controller1.ButtonB.pressing()) {
      Flywheel.stop(coast);
     } else if (Controller1.ButtonX.pressing()){
-     velcontroller(55);
+     velcontroller(63,1);
     } else if (Controller1.ButtonY.pressing()){
-     velcontroller(55);
+     velcontroller(56,1);
     } 
 
 

@@ -17,6 +17,7 @@ extern bumper Cycle;
 extern bumper Confirm;
 extern motor L1, L2, L3;
 extern motor R1, R2, R3;
+extern line Line;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
