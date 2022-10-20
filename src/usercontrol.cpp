@@ -43,7 +43,7 @@ void usercontrol( void ) {
     } else if (Controller1.ButtonB.pressing()) {
      Flywheel.stop(coast);
     } else if (Controller1.ButtonX.pressing()){
-     velcontroller(63,1);
+     velcontroller(95,0);
     } else if (Controller1.ButtonY.pressing()){
      velcontroller(56,1);
     } 

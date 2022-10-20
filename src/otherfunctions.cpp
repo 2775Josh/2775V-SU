@@ -1,7 +1,7 @@
 #include "vex.h"
 
 
-float kP = .13;
+float kP = .2;
 float kI = 0;
 float kD = 0;
 float kF = .12;

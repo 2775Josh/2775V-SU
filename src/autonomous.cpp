@@ -2,10 +2,10 @@
 
 
 
-void autonomous(void) {
-  switch(currentselection){
+void autonomous(void) { 
+  switch(currentselection){  
  case 0:
-  leftAuto();
+  rightAuto();
   break;
  case 1:
   HauntedSkillsAuto();
