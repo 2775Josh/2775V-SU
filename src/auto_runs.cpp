@@ -166,68 +166,91 @@ void leftAuto(){
   vex::task positiontrack = task(positionTrack);
   vex::task bangbangcontrol = task(bangbangcontroller);
   vex::task PIDcontrol = task(pidcontroller);  
-  velcontroller(93,0);
+  velcontroller(97,0);
   driveReset(33, 8.75, 180);
   setDriveVoltage(4, 4);
   task::sleep(250);
   Intake.rotateFor(fwd, 665, deg, 90, velocityUnits::pct, true);
-  straightdrive(35, 13);
+  /*straightdrive(33, 13, 0, 2, 0, 10, 1, 0, 3, 12, 12, 2, 20);
   turn(173);
-  task::sleep(500);
+  task::sleep(1500);
   quickshoot(10,2000);
   Intake.spin(reverse, 12, volt);
   task::sleep(1000);
-  velcontroller(87,0);
-  turn(38);
+  velcontroller(88,0);
+  turn(37);
   Intake.spin(fwd, 12, volt);
-  straightdrive(72, 48,0,2,0,10,1,0,3,5,1,1.5,20);
+  straightdrive(72, 48,0,2,0,10,1,0,3,4,1,1.5,20);
   turn(150);
+  task::sleep(1000);
   quickshoot(10,2000);
-  quickshoot(100,1000);
+  quickshoot(100,1000);*/
 }
 
 void WPAuto(){
-  leftAuto();
-  turn(45);
-  Intake.spin(fwd, 100, pct);
-  straightdrive(128, 114);
-  turn(90);
-  Intake.stop(coast);
-  setDriveVoltage(6, 6);
+  vex::task positiontrack = task(positionTrack);
+  vex::task PIDcontrol = task(pidcontroller); 
+  velcontroller(87,0); 
+  driveReset(33, 8.75, 180);
+  setDriveVoltage(4, 4);
+  task::sleep(250);
+  Intake.rotateFor(fwd, 665, deg, 90, velocityUnits::pct, true);
+  straightdrive(33, 12, 0, 2, 0, 10, 1, 0, 3, 8, 12, 2, 20);
+  turn(40, 0, 1, 20, 1, 0, 3, 8);
+  Intake.spin(fwd, 12, volt);
+  straightdrive(74, 49,0,2,0,10,1,0,3,5,1,1.5,20);
+  turn(150);
   task::sleep(1000);
-  Intake.rotateFor(fwd, 95, deg, 90, velocityUnits::pct, true);
-  driveReset(134, absGlobalY, Gyro.heading());
-  straightdrive(131, 114);
+  quickshoot(10,2000);
+  quickshoot(100,1000);
+  turn(40);
+  Intake.spin(fwd,12,volt);
+  straightdrive(134, 110);
+  turn(90);
+  Intake.stop();
+  setDriveVoltage(4, 4);
+  task::sleep(500);
+  Intake.rotateFor(fwd, 665, deg, 90, velocityUnits::pct, true);
+
+
+ 
 }
 
 void rightAuto(){
   vex::task positiontrack = task(positionTrack);
   vex::task PIDcontrol = task(pidcontroller);  
-  driveReset(56, 17.5, 270);
-  velcontroller(95,0);
-  straightdrive(28, 18);
-  turn(0);
+  driveReset(17.5, 56, 180);
+  velcontroller(50,0);
+  straightdrive(18, 30);
+  turn(270);
   setDriveVoltage(4, 4);
   task::sleep(500);
   Intake.rotateFor(fwd, 665, deg, 90, velocityUnits::pct, true);
-  straightdrive(30, 23);
-  turn(-350);
-  quickshoot(10,2000);
-  Intake.spin(reverse,12,volt);
+  straightdrive(18,30,0,2,0,10,1,0,3,5,0,7,500);
+  quickshoot(100,800);
+  velcontroller(84.5,0);
   Intake.spin(fwd,12,volt);
-  straightdrive(60, 23);
-  straightdrive(75,50);
-
-  
+  turn(0);
+  straightdrive(24,48);
+  turn(45);
+  straightdrive(60, 84, 0, 2, 0, 10, 1, 0, 3, 8, 5, 1.5, 500);
+  turn(-45);
+  straightdrive(68,74, 0, 2, 0, 10, 1, 0, 3, 3, 0, 8, 20);
+  turn(-47);
+  repeat(4){
+    quickshoot(100,200);
+    quickshoot(0,0);
+    task::sleep(1500);
+  } 
 }
 
 void HauntedSkillsAuto(){
   vex::task positiontrack = task(positionTrack);
   vex::task bangbangcontrol = task(bangbangcontroller);
   vex::task PIDcontrol = task(pidcontroller);  
-  float barrierspeed = 60;
-  float barriercornerspeed = 62;
-  float loaderspeed = 61;
+  float barrierspeed = 63;
+  float barriercornerspeed = 62.5;
+  float loaderspeed = 61.5;
   driveReset(33, 11, 180);
   setDriveVoltage(4, 4);
   task::sleep(250);
@@ -240,7 +263,8 @@ void HauntedSkillsAuto(){
   setDriveVoltage(4, 4);
   Intake.stop();
   task::sleep(500);
-  Intake.rotateFor(fwd, 400, deg, 90, velocityUnits::pct, true);
+  Intake.rotateFor(fwd, 400, deg, 90, velocityUnits::pct, false);
+  task::sleep(500);
   setDriveVoltage(-4,-4);
   task::sleep(250);
   Intake.spin(fwd,100,pct);
@@ -253,9 +277,9 @@ void HauntedSkillsAuto(){
   straightdrive(18,46, 0, 2, 0, 10, .5, 0, 3, 8, 12, 5);
   turn(45, 0, 3, 20, .75, 0, 3);
   straightdrive(60, 86, 0, 2, 0, 10, .5, 0, 3, 6, 4, 1.5, 20);
-  turn(140, 0, 3, 250, 1, 0, 3, 12);
-  straightdrive(0, 144, 1000, 5, 0, 10, .75, 0, 3, 5, 12, 1.5, 20);
-  quickshoot(100, 900);
+  turn(135, 0, 3, 250, 1, 0, 3, 12);
+  straightdrive(0, 144, 1000, 5, 0, 10, .75, 0, 3, 5, 5, 1.5, 20);
+  quickshoot();
   Intake.spin(fwd, 100, pct);
   turn(45, 0, 10, 20);
   straightdrive(115, 127, 0, 2, 0, 10, .5, 0, 3, 10, 12, 52, 20);
@@ -274,36 +298,35 @@ void HauntedSkillsAuto(){
     setDriveVoltage(-3,-3);
   }
   driveReset(53.5, absGlobalY,absOrientationDeg);
-  straightdrive(70, 136, 0, 2, 0, 10, .75, 0, 3, 7, 3, 1.5, 100);
+  straightdrive(69, 136, 0, 2, 0, 10, .75, 0, 3, 7, 3, 1.5, 100);
   turn(81, 0, 2, 100, 1, 0, 3, 12);
   DSwitcher.set(true);
   task::sleep(1000);
   Intake.spin(fwd, 100, pct);
-  task::sleep(7000);
+  task::sleep(6500);
   //Halfway
   straightdrive(133, 112, 0, 2, 0, 10, .5, 0, 3, 6, 6, 2, 20);
   setDriveVoltage(4, 4);
   Intake.stop();
   task::sleep(600);
   driveReset(10, 144-absGlobalY,absOrientationDeg+180);
-  Intake.rotateFor(fwd, 400, deg, 90, velocityUnits::pct, true);
+  Intake.rotateFor(fwd, 400, deg, 90, velocityUnits::pct, false);
+  task::sleep(500);
   setDriveVoltage(-4,-4);
   task::sleep(250);
   Intake.spin(fwd,100,pct);
   velcontroller(barriercornerspeed,1);
-  turn(0, 0, 20, 20, 1, 0, 3, 12);
-  straightdrive(18,41, 0, 2, 0, 10, .5, 0, 3, 8, 12, 5);
+  turn(0, 0, 3, 20, .75, 0, 3);
   DSwitcher.set(false);
-  turn(40, 0, 3, 20, .75, 0, 3);
   straightdrive(64, 84, 0, 2, 0, 10, .5, 0, 3, 6, 4, 1.5, 20);
-  turn(140, 0, 3, 250, 1, 0, 3, 12);
-  straightdrive(0, 144, 1000, 5, 0, 10, .75, 0, 3, 5, 12, 1.5, 20);
-  quickshoot(100, 900);
+  turn(135, 0, 3, 250, 1, 0, 3, 12);
+  straightdrive(0, 144, 1000, 5, 0, 10, .75, 0, 3, 5, 5, 1.5, 20);
+  quickshoot();
   Intake.spin(fwd, 100, pct);
   turn(45, 0, 10, 20);
   straightdrive(112, 125, 0, 2, 0, 10, .5, 0, 3, 10, 12, 52, 20);
   straightdrive(112, 125, 0, 2, 0, 10, .5, 0, 3, 4, 2, 2, 20);
-  turn(-10, 0, 2);
+  turn(-20, 0, 2);
   Intake.stop();
   setDriveVoltage(6, 6);
   task::sleep(1000);
@@ -316,15 +339,16 @@ void HauntedSkillsAuto(){
     setDriveVoltage(-3,-3);
   }
   driveReset(53.5, absGlobalY,absOrientationDeg);
-  straightdrive(69, 136, 0, 2, 0, 10, .75, 0, 3, 7, 3, 1.5, 100); 
-  turn(80, 0, 2, 100, 1, 0, 3, 12);
+  straightdrive(69, 135, 0, 2, 0, 10, .75, 0, 3, 7, 3, 1.5, 100); 
+  turn(80, 0, 1, 20, 1, 0, 3, 5);
   DSwitcher.set(true);
   task::sleep(1000);
   Intake.spin(fwd, 100, pct);
-  task::sleep(7000);
+  task::sleep(6500);
   DSwitcher.set(false);
   Intake.stop(coast);
   straightdrive(120, 120, 0, 2, 0, 10, 1, 0, 3, 10, 12, 1.5);
   turn(45);
   Endgame.set(true);
+  task::sleep(99999999);
 }

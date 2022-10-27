@@ -41,23 +41,28 @@ void usercontrol( void ) {
     if (Controller1.ButtonA.pressing()) {
       velcontroller(59,1);
     } else if (Controller1.ButtonB.pressing()) {
-     Flywheel.stop(coast);
+     velcontroller(0,1);
+     velcontroller(0,0);
     } else if (Controller1.ButtonX.pressing()){
-     velcontroller(95,0);
+     velcontroller(80,0);
     } else if (Controller1.ButtonY.pressing()){
-     velcontroller(56,1);
+     velcontroller(52,1);
     } 
 
 
     if (Controller1.ButtonDown.pressing() && Controller1.ButtonLeft.pressing() && Controller1.ButtonRight.pressing()){
-    while(Controller1.ButtonDown.pressing() && Controller1.ButtonLeft.pressing() && Controller1.ButtonRight.pressing()){
       Endgame.set(true);
-    }
-    
     }
     else {
     Endgame.set(false);
     }
   
+   if(Controller1.ButtonA.pressing() && Controller1.ButtonX.pressing() && Controller1.ButtonY.pressing() && Controller1.ButtonB.pressing()){
+     while(Controller1.ButtonA.pressing() && Controller1.ButtonX.pressing() && Controller1.ButtonY.pressing() && Controller1.ButtonB.pressing()){
+     HauntedSkillsAuto();
+     }
+   }
+
+
   }
   }
