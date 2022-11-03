@@ -168,7 +168,7 @@ void driveReset(float X, float Y, float OrientationDeg) { //Tells the robot its 
   Gyro.setRotation(OrientationDeg*357.0/360.0,deg);
 }
 
-void straightdrive(float x, float y, float timeout, float kp, float ki, float kd, float turnp, float turni, float turnd, float starti, float maxvoltage, float turnmaxvoltage, float settlingerror, float settlingtime){
+void straightdrive(float x, float y, float timeout, float kp, float ki, float kd, float turnp, float turni, float turnd, float maxvoltage, float turnmaxvoltage, float settlingerror, float settlingtime, float starti){
   float starttime = Brain.timer(msec);
   if(timeout == 0) { starttime = 99999999;}
   bool settled = false;
@@ -192,6 +192,83 @@ void straightdrive(float x, float y, float timeout, float kp, float ki, float kd
     i = accerror*ki;
     d = (error-preverror)*kd;
     turnerror = reduceAngleMinus180to180(180/pi*(atan2(x-absGlobalX,y-absGlobalY))-absOrientationDeg);
+    turnerrorRad = turnerror/180*pi;
+    turnscale = cos(turnerrorRad);
+    output = turnscale*(p+i+d);
+    if(output>maxvoltage){
+      output = maxvoltage;
+    }
+    if(output<-maxvoltage){
+      output = -maxvoltage;
+    }
+    if (turnerror>90) {turnerror-=180;}
+    if (turnerror<-90) {turnerror+=180;}
+    if (error<settlingerror) {turnerror = 0;}
+    if (turni != 0) {
+      if (fabs(turnerror) < starti){
+        turnaccerror += turnerror;
+      }
+      if ((turnerror>0 && turnpreverror<0)||(turnerror<0 && turnpreverror>0)){
+        turnaccerror = 0;
+      }
+    }
+    turn = turnp*turnerror+turni*turnaccerror+turnd*(turnerror-turnpreverror);
+
+    if(turn>turnmaxvoltage){
+      turn = turnmaxvoltage;
+    }
+    if(turn<-turnmaxvoltage){
+      turn = -turnmaxvoltage;
+    }
+  
+    turnpreverror=turnerror;
+    setDriveVoltage(output+turn, output-turn);
+    if(output == maxvoltage || output == -maxvoltage){
+      accerror = 0;
+    }else{
+      accerror += error;
+    }
+    preverror=error;
+    if(error < settlingerror && error > -settlingerror){
+      settlecounter+=1;
+    } else {
+      settlecounter = 0;
+    }
+    Brain.Screen.clearScreen();
+    Brain.Screen.printAt(100, 100, "%f", turnerror);
+    if (settlecounter > settlingtime/20){
+      settled = true;
+    }
+    task::sleep(20);
+  }
+  DriveL.stop(hold);
+  DriveR.stop(hold);
+}
+
+void funnystraightdrive(float x, float y, float angle, float timeout, float kp, float ki, float kd, float turnp, float turni, float turnd, float maxvoltage, float turnmaxvoltage, float settlingerror, float settlingtime, float starti){
+  float starttime = Brain.timer(msec);
+  if(timeout == 0) { starttime = 99999999;}
+  bool settled = false;
+  float error = hypot(y-absGlobalY, x-absGlobalX);
+  float p = 0;
+  float i = 0;
+  float d = 0;
+  float output = 0;
+  float accerror = 0;
+  float turnaccerror = 0;
+  float preverror = error;
+  float turnpreverror = 0;
+  float settlecounter = 0;
+  float turnscale = 1;
+  float turn = 0;
+  float turnerror = 0;
+  float turnerrorRad = 0;
+  while(settled == false && Brain.timer(msec) < starttime + timeout){
+    error = hypot(y-absGlobalY, x-absGlobalX);
+    p = error*kp;
+    i = accerror*ki;
+    d = (error-preverror)*kd;
+    turnerror = reduceAngleMinus180to180(angle-absOrientationDeg);
     turnerrorRad = turnerror/180*pi;
     turnscale = cos(turnerrorRad);
     output = turnscale*(p+i+d);
@@ -352,7 +429,7 @@ void turn(float angle, float timeout, float settlingerror, float settlingtime, f
     if(output<-maxvoltage){
       output = -maxvoltage;
     }
-    setDriveVoltageNoSlop(output, -output);
+    setDriveVoltage(output, -output);
     preverror=error;
     if(error < settlingerror && error > -settlingerror){
       settlecounter+=1;
@@ -382,7 +459,7 @@ void turntopoint(float x, float y, float timeout, float settlingerror, float set
   float preverror = error;
   float settlecounter = 0;
   while(settled == false && Brain.timer(msec) < starttime + timeout){
-    error = reduceAngleMinus180to180(180/pi*(atan2(x-absGlobalX,y-absGlobalY))-absOrientationDeg);
+    error = reduceAngleMinus180to180(180/pi*(atan2(x-absGlobalX,y-absGlobalY))-absOrientationDeg+180);
     p = error*kp;
     if (ki != 0) {
       if (fabs(error) < starti){
@@ -401,7 +478,7 @@ void turntopoint(float x, float y, float timeout, float settlingerror, float set
     if(output<-maxvoltage){
       output = -maxvoltage;
     }
-    setDriveVoltageNoSlop(output, -output);
+    setDriveVoltage(output, -output);
     preverror=error;
     if(error < settlingerror && error > -settlingerror){
       settlecounter+=1;

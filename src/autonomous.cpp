@@ -3,9 +3,12 @@
 
 
 void autonomous(void) { 
+  vex::task positiontrack = task(positionTrack);
+  
+
   switch(currentselection){  
  case 0:
-  leftAuto();
+  rightAuto();
   break;
  case 1:
   HauntedSkillsAuto();

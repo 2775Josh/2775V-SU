@@ -39,12 +39,12 @@ void usercontrol( void ) {
     }
 
     if (Controller1.ButtonA.pressing()) {
-      velcontroller(59,1);
+      velcontroller(55,1);
     } else if (Controller1.ButtonB.pressing()) {
      velcontroller(0,1);
      velcontroller(0,0);
     } else if (Controller1.ButtonX.pressing()){
-     velcontroller(80,0);
+     velcontroller(77,0);
     } else if (Controller1.ButtonY.pressing()){
      velcontroller(52,1);
     } 
