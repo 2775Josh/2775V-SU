@@ -3,20 +3,23 @@ using namespace vex;
 extern brain Brain;
 
 // VEXcode devices
-extern motor Flywheel;
-extern motor Intake;
-extern motor_group DriveR;
-extern motor_group DriveL;
 extern controller Controller1;
 extern inertial Gyro;
+extern motor Flywheel;
+extern motor Intake;
+extern motor L1;
+extern motor L2;
+extern motor L3;
+extern motor R1;
+extern motor R2;
+extern motor R3;
+extern motor_group DriveL;
+extern motor_group DriveR;
 extern encoder EncoderR;
 extern encoder EncoderB;
+extern digital_out Deflector;
 extern digital_out Endgame;
-extern digital_out DSwitcher;
 extern bumper Cycle;
-extern bumper Confirm;
-extern motor L1, L2, L3;
-extern motor R1, R2, R3;
 extern line Line;
 
 /**

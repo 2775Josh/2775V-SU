@@ -1,8 +1,8 @@
 #include "vex.h"
 
 
-float kP = .01;
-float kI = .05;
+float kP = .012;
+float kI = 0;
 float kD = 0;
 float kF = .12;
 float starti = 50;
@@ -46,7 +46,7 @@ while(true){
 } 
 
 int bangbangcontroller() {
-while(true){
+ while(true){
  double vel = Flywheel.velocity(pct);
  if (vel<target){
    power=100;

@@ -159,10 +159,18 @@ int positionTrack() { //Background thread used to position track full time.
 }
 
 void driveReset(float X, float Y, float OrientationDeg) { //Tells the robot its position on the field at the beginning of a match.
-  prevGlobalX=X;
-  prevGlobalY=Y;
+  prevB=0;
+  prevL=0;
+  prevR=0;
+  currentB = 0;
+  currentL = 0;
+  currentR = 0;
+  EncoderB.resetRotation();
+  EncoderR.resetRotation();
   absGlobalX=X;
   absGlobalY=Y;
+  prevGlobalX=X;
+  prevGlobalY=Y;
   prevOrientationRad=OrientationDeg*pi/180;
   absOrientationDeg=OrientationDeg;
   Gyro.setRotation(OrientationDeg*357.0/360.0,deg);

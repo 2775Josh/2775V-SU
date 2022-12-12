@@ -1,7 +1,5 @@
 void twelveSkillsAuto();
 
-void HauntedSkillsAuto();
-
 void fifteenSkillsAuto();
 
 void leftAuto();
@@ -9,3 +7,5 @@ void leftAuto();
 void rightAuto();
 
 void WPAuto();
+
+void WPISkillsAuto();
