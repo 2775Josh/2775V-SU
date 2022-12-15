@@ -5,7 +5,7 @@
 void autonomous(void) { 
   switch(currentselection){  
  case 0:
-  leftAuto();
+ WPISkillsAuto();
   break;
  case 1:
   WPISkillsAuto();
@@ -14,9 +14,12 @@ void autonomous(void) {
   leftAuto();
   break;
  case 3:
-  rightAuto();
+  sixDiscLeftAuto();
   break;
  case 4:
+  rightAuto();
+  break;
+ case 5:
   WPAuto();
   break;
  }

@@ -20,12 +20,15 @@ motor R2 = motor(PORT5, ratio6_1, false);
 motor R3 = motor(PORT2, ratio6_1, false);
 motor_group DriveL = motor_group(L1,L2,L3);
 motor_group DriveR = motor_group(R1,R2,R3);
-encoder EncoderR = encoder(Brain.ThreeWirePort.A);
-encoder EncoderB = encoder(Brain.ThreeWirePort.C);
+encoder EncoderB = encoder(Brain.ThreeWirePort.A);
+encoder EncoderR = encoder(Brain.ThreeWirePort.C);
 digital_out Deflector = digital_out(Brain.ThreeWirePort.E);
 digital_out Endgame = digital_out(Brain.ThreeWirePort.F);
 bumper Cycle = bumper(Brain.ThreeWirePort.G);
 line Line = line(Brain.ThreeWirePort.H);
+triport Expander = triport(PORT1);
+digital_out DSwitcher = digital_out(Expander.A);
+digital_out Endgame2 = digital_out(Expander.B);
 
  
 void vexcodeInit( void ) {

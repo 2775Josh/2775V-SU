@@ -31,9 +31,12 @@ void pre_auton(){
       Brain.Screen.printAt(50, 50, "Left");
       break;
     case 3:
-      Brain.Screen.printAt(50, 50, "Right");
+      Brain.Screen.printAt(50, 50, "6 Disc Left");
       break;
     case 4:
+      Brain.Screen.printAt(50, 50, "Right");
+      break;
+    case 5:
       Brain.Screen.printAt(50, 50, "AWP");
       break;
     }
@@ -44,7 +47,7 @@ void pre_auton(){
     currentselection ++;
     }
 
-    else if(currentselection == 5){
+    else if(currentselection == 6){
     currentselection = 0;
     }
     task::sleep(20);

@@ -10,9 +10,8 @@ void usercontrol( void ) {
   float throttle;
   float turn;
   double drivescalefactor = 0.09448818897;
-  float turnScaleFactor = 0.8;
   bool mode = 0;
-  velcontroller(63, 1);
+  velcontroller(61, 1);
   Deflector.set(true);
 
   while (1) {
@@ -35,19 +34,11 @@ void usercontrol( void ) {
       }
     }
 
-    if(Controller1.ButtonL1.pressing()){
-     while(Controller1.ButtonL1.pressing()){}
-      Intake.rotateFor(fwd, 800, deg, 100, velocityUnits::pct, false);
-    }
-
     if (Controller1.ButtonR1.pressing()) {
      Intake.spin(fwd, 100, pct);
     } 
     else if (Controller1.ButtonR2.pressing()) {
       Intake.spin(reverse, 100, pct);
-    } 
-    else if(Controller1.ButtonL2.pressing()){
-      Intake.spin(fwd,66, pct);
     } 
     else if (Intake.isDone()){
       Intake.stop(coast);
@@ -78,26 +69,21 @@ void usercontrol( void ) {
      velcontroller(0,0);
     } 
 
-    if (Controller1.ButtonDown.pressing() && 
-        Controller1.ButtonLeft.pressing() && 
-        Controller1.ButtonRight.pressing()){
+    if (Controller1.ButtonL1.pressing() &&
+        Controller1.ButtonL2.pressing()){
       Endgame.set(true);
+      Endgame2.set(true);
     }
+
     else {
     Endgame.set(false);
+    Endgame2.set(false);
     }
   
-   if(Controller1.ButtonA.pressing() && 
-      Controller1.ButtonX.pressing() && 
-      Controller1.ButtonY.pressing() && 
-      Controller1.ButtonB.pressing()){
 
-   while(Controller1.ButtonA.pressing() && 
-        Controller1.ButtonX.pressing() && 
-        Controller1.ButtonY.pressing() && 
-        Controller1.ButtonB.pressing()){
-     }
-    }
+    
+  
+  
 
 
   }

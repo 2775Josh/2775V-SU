@@ -21,6 +21,9 @@ extern digital_out Deflector;
 extern digital_out Endgame;
 extern bumper Cycle;
 extern line Line;
+extern triport Expander;
+extern digital_out DSwitcher;
+extern digital_out Endgame2; 
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
