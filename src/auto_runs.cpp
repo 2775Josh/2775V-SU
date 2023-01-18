@@ -332,7 +332,7 @@ void WPISkillsAuto(){
   vex::task positiontrack = task(positionTrack);
   vex::task bangbangcontrol = task(bangbangcontroller);
   vex::task PIDcontrol = task(pidcontroller);  
-  float barrierspeed = 59;
+  float barrierspeed = 62;
   float crosscourtspeed = 84.5;
   float rollertime = 400;
   float rollerrotation = 500;
@@ -447,7 +447,7 @@ void WPISkillsAuto(){
   }
   task::sleep(5);
   Intake.spin(fwd,100,pct);
-  straightdrive(12, 93, 2500, 1.2, 0, 10, 1, .01, 3, 12, 8, 3, 0);
+  straightdrive(16, 93, 2500, 1.2, 0, 10, 1, .01, 3, 12, 8, 3, 0);
   turntopoint(21,123, 0, 2, 200);
   quickshoot(100,shottime);
 
