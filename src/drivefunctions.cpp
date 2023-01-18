@@ -155,6 +155,7 @@ int positionTrack() { //Background thread used to position track full time.
     Brain.Screen.printAt(1, 20, "Absolute X: %f Inches", absGlobalX);
     Brain.Screen.printAt(1, 40, "Absolute Y: %f Inches", absGlobalY);
     Brain.Screen.printAt(1, 60, "Absolute Rotation: %f Radians, %f Degrees", Gyro.rotation(deg), absOrientationDeg);
+    task::sleep(5);
   }
 }
 
